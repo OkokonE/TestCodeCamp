@@ -1,0 +1,168 @@
+public class seleniumblogsignuptest {
+    private WebDriver driver;
+
+    @BeforeTest
+    public void start() throws InterruptedException {
+    System.setProperty("webdriver.gecko.driver", "resources/geckodriver.exe");
+
+        //1. Launch the browser
+        driver = new FirefoxDriver();
+
+        //2. Input the URL
+        driver.get("https://selenium-blog.herokuapp.com/");
+            // Test 1 - Verify correct URL is used
+            if(driver.getCurrentUrl().contains("https://selenium-blog.herokuapp.com/"))
+                // Pass
+                System.out.println("Correct URL");
+            else
+                // Failed
+                System.out.println("Wrong URL");
+
+        //3. Click Sign Up button
+        driver.findElement(By.xpath("/html/body/div[2]/div/a[2]")).click();
+            // Test 2 - Verify user is taken to sign up page
+            if(driver.getCurrentUrl().contains("https://selenium-blog.herokuapp.com/signup"))
+                // Pass
+                System.out.println("Correct URL");
+            else
+                // Failed
+                System.out.println("Wrong URL");
+        Thread.sleep(5000);
+    }
+
+    @Test (priority = 0)
+    public void Negativetest1() throws InterruptedException {
+            // Test 3 - Verify user cannot sign up with blank field
+        //4. Input Username
+        driver.findElement(By.id("user_username")).sendKeys("");
+        Thread.sleep(5000);
+
+        //5. Input E-mail
+        driver.findElement(By.id("user_email")).sendKeys("");
+        Thread.sleep(5000);
+
+        //6. Input Password
+        driver.findElement(By.id("user_password")).sendKeys("");
+        Thread.sleep(5000);
+
+        //7. Click on Submit button
+        driver.findElement(By.id("submit")).click();
+        Thread.sleep(5000);
+    }
+
+    @Test (priority = 1)
+    public void Negativetest2() throws InterruptedException {
+      driver.get("https://selenium-blog.herokuapp.com/signup");
+      Thread.sleep(1000);
+
+            // Test 4 - Verify user cannot sign up with less than 3 characters in username field
+        //4. Input Username
+        driver.findElement(By.id("user_username")).sendKeys("ad");
+        Thread.sleep(5000);
+
+        //5. Input E-mail
+        driver.findElement(By.id("user_email")).sendKeys("struhkovsaya@emvil.com");
+        Thread.sleep(5000);
+
+        //6. Input Password
+        driver.findElement(By.id("user_password")).sendKeys("figurine");
+        Thread.sleep(5000);
+
+        //7. Click on Submit button
+        driver.findElement(By.id("submit")).click();
+        Thread.sleep(5000);
+    }
+
+    @Test (priority = 2)
+    public void Negativetest3() throws InterruptedException {
+      driver.get("https://selenium-blog.herokuapp.com/signup");
+        Thread.sleep(1000);
+
+             // Test 5 - Verify user cannot sign up with invalid email
+        //4. Input Username
+        driver.findElement(By.id("user_username")).sendKeys("Euniceoooio");
+        Thread.sleep(5000);
+
+        //5. Input E-mail
+        driver.findElement(By.id("user_email")).sendKeys("fhkjyu@chgjhgv");
+        Thread.sleep(5000);
+
+        //6. Input Password
+        driver.findElement(By.id("user_password")).sendKeys("figurine");
+        Thread.sleep(5000);
+
+        //7. Click on Submit button
+        driver.findElement(By.id("submit")).click();
+        Thread.sleep(5000);
+    }
+
+    @Test (priority = 3)
+    public void Positivetest() throws InterruptedException {
+      driver.get("https://selenium-blog.herokuapp.com/signup");
+      Thread.sleep(1000);
+
+            // Test 6 - Verify user can login with valid details inputted
+        //4. Input Username
+        driver.findElement(By.id("user_username")).sendKeys("EnicOO01200");
+        Thread.sleep(5000);
+
+        //5. Input E-mail
+        driver.findElement(By.id("user_email")).sendKeys("strhko78saya@emvil.com");
+        Thread.sleep(5000);
+
+        //6. Input Password
+        driver.findElement(By.id("user_password")).sendKeys("figure");
+        Thread.sleep(5000);
+
+        //7. Click on Submit button
+        driver.findElement(By.id("submit")).click();
+        Thread.sleep(5000);
+    }
+
+    @Test (priority = 4)
+    public void Verifyuser1item() throws InterruptedException {
+
+        //8. Click on User1
+        driver.findElement(By.xpath("/html/body/div[2]/div[1]/ul/div/div/li[1]/a")).click();
+            // Test 7 - Verify is clickable and takes user to the right page
+        if(driver.getCurrentUrl().contains("https://selenium-blog.herokuapp.com/users/1"))
+            // Pass
+            System.out.println("Sign up successful");
+        else
+            //Fail
+            System.out.println("Sign up not successful");
+        Thread.sleep(10000);
+    }
+
+    @Test (priority = 5)
+    public void Learnxpath() throws InterruptedException {
+        //9. Click on Learnxpath
+        driver.findElement(By.xpath("/html/body/div[2]/div[1]/div/div/div[1]/a")).click();
+            // Test 8 - Verify user is taken to learnxpath page
+        if(driver.getCurrentUrl().contains("https://selenium-blog.herokuapp.com/articles/59"))
+            // Pass
+            System.out.println("Correct user1 page");
+        else
+            //Fail
+            System.out.println("Wrong user1 page");
+        Thread.sleep(5000);
+
+        //10. Click on Logout
+        driver.findElement(By.xpath("/html/body/nav/div/div[2]/ul/li[3]/a")).click();
+            // Test 9 - Verify user is taken to landing page
+        if(driver.getCurrentUrl().contains("https://selenium-blog.herokuapp.com/"))
+            // Pass
+            System.out.println("Correct landing page");
+        else
+            // Fail
+            System.out.println("Wrong landing page");
+        Thread.sleep(5000);
+    }
+
+    @AfterTest
+    public void Closebrowser() {
+        //11. Quit the browser
+        driver.quit();
+    }
+
+}
